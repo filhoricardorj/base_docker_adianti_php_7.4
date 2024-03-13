@@ -8,15 +8,15 @@ services:
     image: adianti_server:debian-10_php7.4
     restart: on-failure
     ports:
-      - "88:80"
+      - "80:80"
     networks:
       - network
     volumes:
       - ./php-dev.ini:/etc/php/7.4/apache2/php.ini
       - ./html:/var/www/html
       - ./logs/apache2:/var/log/apache2
-    # depends_on:
-    #   - mariadb
+    depends_on:
+      - mariadb
     extra_hosts:
       - host.docker.internal:host-gateway
 
@@ -25,23 +25,23 @@ services:
     restart: on-failure
     environment:
       #MYSQL_ALLOW_EMPTY_PASSWORD: 1
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: PASSWORD
     ports:
-      - "3308:3306"
+      - "3306:3306"
     volumes:
       - ./mariadb:/var/lib/mysql
     networks:
       - network
 
-  # phpmyadmin:
-  #   image: phpmyadmin
-  #   restart: always
-  #   environment:
-  #     PMA_ARBITRARY: 1
-  #   ports:
-  #     - 8081:80
-  #   networks:
-  #     - network
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    environment:
+      PMA_ARBITRARY: 1
+    ports:
+      - 8080:80
+    networks:
+      - network
 
 networks:
   network:
