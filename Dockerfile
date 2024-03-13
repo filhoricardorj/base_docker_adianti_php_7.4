@@ -50,6 +50,8 @@ RUN echo "xdebug.idekey=XDEBUG" >> /etc/php/7.4/mods-available/xdebug.ini
 
 RUN apt clean && updatedb
 
+RUN chmod 777 /var/lib/php/sessions
+
 EXPOSE 80
 
 CMD apache2ctl -D FOREGROUND
